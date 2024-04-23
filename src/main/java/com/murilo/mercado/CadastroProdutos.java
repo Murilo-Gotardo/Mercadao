@@ -50,30 +50,30 @@ public class CadastroProdutos extends javax.swing.JFrame {
         setTitle("Cadastro de produtos");
         setLocationByPlatform(true);
         java.awt.GridBagLayout layout1 = new java.awt.GridBagLayout();
-        layout1.columnWidths = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
-        layout1.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        layout1.columnWidths = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        layout1.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
         getContentPane().setLayout(layout1);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridy = 4;
         getContentPane().add(name, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 20;
+        gridBagConstraints.gridy = 12;
         getContentPane().add(description, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 28;
+        gridBagConstraints.gridy = 20;
         getContentPane().add(weigth, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 36;
+        gridBagConstraints.gridy = 28;
         getContentPane().add(value, gridBagConstraints);
 
         jLabel1.setText("Nome");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 1);
         getContentPane().add(jLabel1, gridBagConstraints);
@@ -81,7 +81,7 @@ public class CadastroProdutos extends javax.swing.JFrame {
         jLabel2.setText("Descrição");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 16;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 1);
         getContentPane().add(jLabel2, gridBagConstraints);
@@ -89,7 +89,7 @@ public class CadastroProdutos extends javax.swing.JFrame {
         jLabel3.setText("Peso");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 24;
+        gridBagConstraints.gridy = 16;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 1);
         getContentPane().add(jLabel3, gridBagConstraints);
@@ -97,7 +97,7 @@ public class CadastroProdutos extends javax.swing.JFrame {
         jLabel4.setText("Valor");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 32;
+        gridBagConstraints.gridy = 24;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 1);
         getContentPane().add(jLabel4, gridBagConstraints);
@@ -151,8 +151,8 @@ public class CadastroProdutos extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 17;
-        gridBagConstraints.gridheight = 41;
+        gridBagConstraints.gridwidth = 15;
+        gridBagConstraints.gridheight = 33;
         getContentPane().add(jScrollPane1, gridBagConstraints);
 
         salvarBTN.setText("Salvar");
@@ -163,7 +163,7 @@ public class CadastroProdutos extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
-        gridBagConstraints.gridy = 44;
+        gridBagConstraints.gridy = 36;
         getContentPane().add(salvarBTN, gridBagConstraints);
 
         removerBTN.setText("Remover");
@@ -174,7 +174,7 @@ public class CadastroProdutos extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 12;
-        gridBagConstraints.gridy = 44;
+        gridBagConstraints.gridy = 36;
         getContentPane().add(removerBTN, gridBagConstraints);
 
         logoutBTN.setText("Sair");
@@ -184,8 +184,9 @@ public class CadastroProdutos extends javax.swing.JFrame {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 20;
-        gridBagConstraints.gridy = 44;
+        gridBagConstraints.gridx = 18;
+        gridBagConstraints.gridy = 36;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
         getContentPane().add(logoutBTN, gridBagConstraints);
 
         pack();

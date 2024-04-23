@@ -12,14 +12,14 @@ import java.util.UUID;
  */
 public class Produto {
     
-    private int id = 0;
+    private int id;
     private String nome;
     private String descricao;
     private double peso;
     private double valor;
 
     public Produto(String nome, String descricao, double peso, double valor) {
-        this.id++;
+        this.id = UUID.randomUUID().hashCode();
         this.nome = nome;
         this.descricao = descricao;
         this.peso = peso;

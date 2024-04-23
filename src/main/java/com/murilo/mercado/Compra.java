@@ -18,7 +18,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Compra extends javax.swing.JFrame {
 
+    private Cliente cliente;
     private List<Produto> produtosCarrinho = new ArrayList<>();
+    private double valorTotal;
 
     public Compra() {
     }
@@ -49,17 +51,28 @@ public class Compra extends javax.swing.JFrame {
         produtosTable = new javax.swing.JTable();
         adicionaAoCarrinhoBTN = new javax.swing.JButton();
         carrinho = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        carrinhoTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        carrinhoTable = new javax.swing.JTable();
+        valorCarrinhoLabel = new javax.swing.JLabel();
+        greeting = new javax.swing.JLabel();
+        logoutBTN = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Mercado");
         setLocationByPlatform(true);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        setMinimumSize(new java.awt.Dimension(750, 600));
+        java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
+        layout.columnWidths = new int[] {0, 5, 0};
+        layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        getContentPane().setLayout(layout);
 
         jTabbedPane1.setMinimumSize(new java.awt.Dimension(100, 100));
 
-        produtos.setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagLayout produtosLayout = new java.awt.GridBagLayout();
+        produtosLayout.columnWidths = new int[] {0};
+        produtosLayout.rowHeights = new int[] {0, 5, 0};
+        produtos.setLayout(produtosLayout);
 
         produtosTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -111,7 +124,6 @@ public class Compra extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 5;
         produtos.add(jScrollPane1, gridBagConstraints);
 
         adicionaAoCarrinhoBTN.setText("Adicionar ao carrinho");
@@ -122,12 +134,22 @@ public class Compra extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         produtos.add(adicionaAoCarrinhoBTN, gridBagConstraints);
 
         jTabbedPane1.addTab("Produtos", produtos);
 
-        carrinho.setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagLayout carrinhoLayout = new java.awt.GridBagLayout();
+        carrinhoLayout.columnWidths = new int[] {0, 5, 0};
+        carrinhoLayout.rowHeights = new int[] {0, 5, 0};
+        carrinho.setLayout(carrinhoLayout);
+
+        jButton1.setText("Finalizar");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        carrinho.add(jButton1, gridBagConstraints);
 
         carrinhoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -153,42 +175,54 @@ public class Compra extends javax.swing.JFrame {
             }
         });
         carrinhoTable.setColumnSelectionAllowed(true);
-        carrinhoTable.setMaximumSize(new java.awt.Dimension(500, 0));
         carrinhoTable.getTableHeader().setReorderingAllowed(false);
         carrinhoTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 carrinhoTableMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(carrinhoTable);
+        jScrollPane3.setViewportView(carrinhoTable);
         carrinhoTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 434;
-        gridBagConstraints.ipady = 405;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(13, 0, 14, 0);
-        carrinho.add(jScrollPane2, gridBagConstraints);
-
-        jButton1.setText("Finalizar");
+        gridBagConstraints.gridwidth = 3;
+        carrinho.add(jScrollPane3, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        carrinho.add(jButton1, gridBagConstraints);
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        carrinho.add(valorCarrinhoLabel, gridBagConstraints);
 
         jTabbedPane1.addTab("Carrinho", carrinho);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 6;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridheight = 9;
         getContentPane().add(jTabbedPane1, gridBagConstraints);
+
+        greeting.setText("Olá " + getCliente().getNome());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        getContentPane().add(greeting, gridBagConstraints);
+
+        logoutBTN.setText("Sair");
+        logoutBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutBTNActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        getContentPane().add(logoutBTN, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -210,11 +244,13 @@ public class Compra extends javax.swing.JFrame {
         Object valor = produtosTable.getValueAt(produtosTable.getSelectedRow(), produtosTable.getColumnCount() - 1);
         rowData.add(nome);
         rowData.add(valor);
-
-
+        
         // Adicionando a lista como uma nova linha na tabela de destino
         DefaultTableModel carrinhoTableModel = (DefaultTableModel) carrinhoTable.getModel();
         carrinhoTableModel.addRow(rowData.toArray());
+        valorTotal += ((Number) valor).doubleValue();
+        
+        valorCarrinhoLabel.setText("Valor Total R$" + valorTotal);
 
 
     }//GEN-LAST:event_adicionaAoCarrinhoBTNActionPerformed
@@ -222,6 +258,11 @@ public class Compra extends javax.swing.JFrame {
     private void carrinhoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carrinhoTableMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_carrinhoTableMouseClicked
+
+    private void logoutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTNActionPerformed
+        this.setVisible(false);
+        new Login().setVisible(true);
+    }//GEN-LAST:event_logoutBTNActionPerformed
 
     /**
      * @param args the command line arguments
@@ -235,8 +276,6 @@ public class Compra extends javax.swing.JFrame {
         });
     }
 
-    private Cliente cliente;
-
     public Cliente getCliente() {
         return cliente;
     }
@@ -249,11 +288,14 @@ public class Compra extends javax.swing.JFrame {
     private javax.swing.JButton adicionaAoCarrinhoBTN;
     private javax.swing.JPanel carrinho;
     private javax.swing.JTable carrinhoTable;
+    private javax.swing.JLabel greeting;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton logoutBTN;
     private javax.swing.JPanel produtos;
     private javax.swing.JTable produtosTable;
+    private javax.swing.JLabel valorCarrinhoLabel;
     // End of variables declaration//GEN-END:variables
 }
