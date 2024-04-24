@@ -109,6 +109,9 @@
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="produtosTableMouseClicked"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();&#xa;renderer.setHorizontalAlignment(SwingConstants.CENTER);&#xa;&#xa;// Aplicando o renderizador de c&#xe9;lula a todas as colunas da tabela&#xa;for (int i = 0; i &lt; produtosTable.getColumnCount(); i++) {&#xa;    produtosTable.getColumnModel().getColumn(i).setCellRenderer(renderer);&#xa;}"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -377,6 +380,9 @@
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="carrinhoTableMouseClicked"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="DefaultTableCellRenderer rendererCarrinho = new DefaultTableCellRenderer();&#xa;rendererCarrinho.setHorizontalAlignment(SwingConstants.CENTER);&#xa;&#xa;// Aplicando o renderizador de c&#xe9;lula a todas as colunas da tabela&#xa;for (int i = 0; i &lt; carrinhoTable.getColumnCount(); i++) {&#xa;    carrinhoTable.getColumnModel().getColumn(i).setCellRenderer(rendererCarrinho);&#xa;}"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>

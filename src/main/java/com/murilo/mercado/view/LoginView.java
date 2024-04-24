@@ -9,20 +9,22 @@ import com.murilo.mercado.view.CadastroProdutoView;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.murilo.mercado.model.ClienteModel;
 import com.murilo.mercado.model.MercadoModel;
-import com.murilo.mercado.model.controller.CadastroProdutoController;
-import com.murilo.mercado.model.controller.LoginController;
-import com.murilo.mercado.model.controller.MercadoController;
+import com.murilo.mercado.controller.CadastroProdutoController;
+import com.murilo.mercado.controller.LoginController;
+import com.murilo.mercado.controller.MercadoController;
+import com.murilo.mercado.model.AdministradorModel;
+import com.murilo.mercado.model.abstraction.Pessoa;
 
 /**
  *
  * @author murilo
  */
 public class LoginView extends javax.swing.JFrame {
-    
+
     private CadastroProdutoController cadastroProdutoController = new CadastroProdutoController();
     private MercadoController mercadoController = new MercadoController();
     private LoginController loginController = new LoginController();
-    
+
     /**
      * Creates new form NewJFrame
      */
@@ -157,15 +159,16 @@ public class LoginView extends javax.swing.JFrame {
 
     private void loginBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBTNActionPerformed
         // TODO add your handling code here:
-        if (!nomeCliente.getText().isEmpty() && !cpfCliente.getText().isEmpty()){
-            if (isAdmin.isSelected()){
-                cadastroProdutoController.createView();
-            } else {
-                ClienteModel cliente = loginController.login(nomeCliente.getText(), cpfCliente.getText());
-                mercadoController.createView(cliente);
+        if (!nomeCliente.getText().isEmpty() && !cpfCliente.getText().isEmpty()) {
+            if (loginController.login(nomeCliente.getText(), cpfCliente.getText(), isAdmin.isSelected())) {
+                if (isAdmin.isSelected()) {
+                    cadastroProdutoController.createView();
+                } else {
+                    ClienteModel cliente = mercadoController.getLastCliente(cpfCliente.getText());
+                    mercadoController.createView(cliente);
+                }
+                loginController.logout(this);
             }
-            
-            loginController.logout(this);
         } else {
             textRequirements.setVisible(true);
         }

@@ -98,7 +98,7 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="produtosTable">
           <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();&#xa;renderer.setHorizontalAlignment(SwingConstants.CENTER);&#xa;&#xa;// Aplicando o renderizador de c&#xe9;lula a todas as colunas da tabela&#xa;for (int i = 0; i &lt; produtosTable.getColumnCount(); i++) {&#xa;    produtosTable.getColumnModel().getColumn(i).setCellRenderer(renderer);&#xa;}">
               <Table columnCount="5" rowCount="0">
                 <Column editable="false" title="Id" type="java.lang.Integer"/>
                 <Column editable="true" title="Nome" type="java.lang.String"/>
@@ -144,6 +144,9 @@
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="produtosTableMouseClicked"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableCellRenderer re = new DefaultTableCellRenderer();&#xa;String[] indentifier = {&quot;Id&quot;, &quot;Nome&quot;, &quot;Descricao&quot;, &quot;Peso&quot;, &quot;Valor&quot;};&#xa;        &#xa;re.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);&#xa;for (int i = 0; i&lt;0;i++) {&#xa;    produtosTable.getColumn(indentifier[i]).setCellRenderer(re);&#xa;&#xa;}"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

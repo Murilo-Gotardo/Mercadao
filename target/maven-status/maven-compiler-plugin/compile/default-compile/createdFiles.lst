@@ -10,7 +10,9 @@ com\murilo\mercado\view\CadastroProdutoView$5.class
 com\murilo\mercado\view\MercadoView$4.class
 com\murilo\mercado\view\LoginView$2.class
 com\murilo\mercado\view\LoginView$4.class
+com\murilo\mercado\controller\CadastroProdutoController.class
 com\murilo\mercado\view\CadastroProdutoView$2.class
+com\murilo\mercado\controller\MercadoController.class
 com\murilo\mercado\view\MercadoView$1.class
 com\murilo\mercado\view\MercadoView$6.class
 com\murilo\mercado\model\AdministradorModel.class
@@ -20,9 +22,7 @@ com\murilo\mercado\view\CadastroProdutoView$4.class
 com\murilo\mercado\model\ClienteModel.class
 com\murilo\mercado\view\MercadoView$3.class
 com\murilo\mercado\model\MercadoModel.class
-com\murilo\mercado\model\controller\CadastroProdutoController.class
 com\murilo\mercado\view\CadastroProdutoView$3.class
+com\murilo\mercado\controller\LoginController.class
 com\murilo\mercado\view\MercadoView$5.class
-com\murilo\mercado\model\controller\MercadoController.class
-com\murilo\mercado\model\controller\LoginController.class
 com\murilo\mercado\view\LoginView$3.class

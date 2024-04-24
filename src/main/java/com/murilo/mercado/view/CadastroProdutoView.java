@@ -6,9 +6,11 @@ package com.murilo.mercado.view;
 
 import com.murilo.mercado.model.MercadoModel;
 import com.murilo.mercado.model.ProdutoModel;
-import com.murilo.mercado.model.controller.CadastroProdutoController;
-import com.murilo.mercado.model.controller.LoginController;
-import com.murilo.mercado.model.controller.MercadoController;
+import com.murilo.mercado.controller.CadastroProdutoController;
+import com.murilo.mercado.controller.LoginController;
+import com.murilo.mercado.controller.MercadoController;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -100,6 +102,14 @@ public class CadastroProdutoView extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 1);
         getContentPane().add(jLabel4, gridBagConstraints);
 
+        DefaultTableCellRenderer re = new DefaultTableCellRenderer();
+        String[] indentifier = {"Id", "Nome", "Descricao", "Peso", "Valor"};
+
+        re.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+        for (int i = 0; i<0;i++) {
+            produtosTable.getColumn(indentifier[i]).setCellRenderer(re);
+
+        }
         produtosTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -123,6 +133,13 @@ public class CadastroProdutoView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Aplicando o renderizador de célula a todas as colunas da tabela
+        for (int i = 0; i < produtosTable.getColumnCount(); i++) {
+            produtosTable.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
         produtosTable.setColumnSelectionAllowed(true);
         produtosTable.getTableHeader().setReorderingAllowed(false);
         produtosTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -219,6 +236,8 @@ public class CadastroProdutoView extends javax.swing.JFrame {
         description.setText("");
         weigth.setText("");
         value.setText("");
+        
+        
     }//GEN-LAST:event_salvarBTNActionPerformed
 
     private void produtosTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_produtosTableMouseClicked

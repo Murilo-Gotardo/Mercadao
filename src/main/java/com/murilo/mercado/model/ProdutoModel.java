@@ -19,7 +19,7 @@ public class ProdutoModel {
     private double valor;
 
     public ProdutoModel(String nome, String descricao, double peso, double valor) {
-        this.id = UUID.randomUUID().hashCode();
+        this.id = Math.abs(UUID.randomUUID().hashCode());
         this.nome = nome;
         this.descricao = descricao;
         this.peso = peso;

@@ -5,6 +5,8 @@
 package com.murilo.mercado.view;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.murilo.mercado.controller.LoginController;
+import com.murilo.mercado.controller.MercadoController;
 import com.murilo.mercado.model.ClienteModel;
 import com.murilo.mercado.model.MercadoModel;
 import com.murilo.mercado.model.ProdutoModel;
@@ -20,6 +22,9 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,6 +34,8 @@ public class MercadoView extends javax.swing.JFrame {
 
     private ClienteModel cliente;
     private double valorTotal;
+    private MercadoController mercadoController = new MercadoController();
+    private LoginController loginController = new LoginController();
 
     public MercadoView() {
     }
@@ -112,6 +119,13 @@ public class MercadoView extends javax.swing.JFrame {
                 produtosTableMouseClicked(evt);
             }
         });
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Aplicando o renderizador de célula a todas as colunas da tabela
+        for (int i = 0; i < produtosTable.getColumnCount(); i++) {
+            produtosTable.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
         jScrollPane1.setViewportView(produtosTable);
         produtosTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         produtosTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -194,6 +208,13 @@ public class MercadoView extends javax.swing.JFrame {
                 carrinhoTableMouseClicked(evt);
             }
         });
+        DefaultTableCellRenderer rendererCarrinho = new DefaultTableCellRenderer();
+        rendererCarrinho.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Aplicando o renderizador de célula a todas as colunas da tabela
+        for (int i = 0; i < carrinhoTable.getColumnCount(); i++) {
+            carrinhoTable.getColumnModel().getColumn(i).setCellRenderer(rendererCarrinho);
+        }
         jScrollPane3.setViewportView(carrinhoTable);
         carrinhoTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         DefaultTableModel carrinhoModel = (DefaultTableModel) carrinhoTable.getModel();
@@ -277,12 +298,8 @@ public class MercadoView extends javax.swing.JFrame {
         // Adicionando a lista como uma nova linha na tabela de destino
         DefaultTableModel carrinhoTableModel = (DefaultTableModel) carrinhoTable.getModel();
         carrinhoTableModel.addRow(carrinhoArray);
-        int idToCompare = ((Number) rowData.get(0)).intValue();
-        cliente.getProdutos().add(MercadoModel.getProdutos()
-                .stream()
-                .filter(p -> p.getId() == idToCompare)
-                .findAny()
-                .orElseThrow());
+        int id = ((Number) rowData.get(0)).intValue();
+        cliente.getProdutos().add(mercadoController.getProdutoById(id));
         
         valorTotal += ((Number) rowData.get(4)).doubleValue();
 
@@ -294,45 +311,20 @@ public class MercadoView extends javax.swing.JFrame {
     }//GEN-LAST:event_carrinhoTableMouseClicked
 
     private void logoutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTNActionPerformed
-        this.setVisible(false);
-        new LoginView().setVisible(true);
+        loginController.logout(this);
+        loginController.createView();
     }//GEN-LAST:event_logoutBTNActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-        // Criando um JFileChooser
         JFileChooser fileChooser = new JFileChooser();
 
-        // Definindo o modo de seleção para diretórios apenas
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
-        // Exibindo o diálogo de seleção de diretório para salvar
-        int resultado = fileChooser.showSaveDialog(null);
+        fileChooser.showSaveDialog(null);
         
         String path = fileChooser.getSelectedFile().getAbsolutePath();
-
         
-        try {
-            FileWriter writer = new FileWriter(new File(path + "/NF-e.txt"));
-            
-            writer.write("-----------------Nota Fiscal Eletronica-----------------" + "\n" + "\n");
-            
-            writer.write("Comprador " + cliente.getNome() + " de CPF " + cliente.getCpf() + "\n" + "\n");
-            
-            writer.write("-------------------Produtos Comprados-------------------" + "\n" + "\n");
-            
-            for (ProdutoModel produto : cliente.getProdutos()) {
-                writer.write(produto.getNome() + " || " + produto.getPeso() + "Kg || R$" + produto.getValor() + "\n" + "\n");
-            }
-            
-            writer.write("Total R$" + valorTotal);
-            
-            writer.close();
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao salvar arquivo", "Arquivo com problema", ERROR);
-        }
-        
+        mercadoController.createNFE(cliente, valorTotal, path);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

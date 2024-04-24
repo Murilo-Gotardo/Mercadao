@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.murilo.mercado.model.controller;
+package com.murilo.mercado.controller;
 
 import com.murilo.mercado.model.ClienteModel;
 import com.murilo.mercado.view.CadastroProdutoView;
