@@ -4,8 +4,6 @@
  */
 package com.murilo.mercado.controller;
 
-import com.murilo.mercado.model.ClienteModel;
-import com.murilo.mercado.model.MercadoModel;
 import com.murilo.mercado.model.ProdutoModel;
 import com.murilo.mercado.view.CadastroProdutoView;
 import javax.swing.JTable;
@@ -42,6 +40,16 @@ public class CadastroProdutoController {
         tableModel.fireTableCellUpdated(table.getSelectedRow(), table.getSelectedColumn());
         
         return selectedId;
+    }
+    
+    public void flushTable(JTable table) {
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+        
+        int rowCount = tableModel.getRowCount() - 1;
+            
+        for (int i = 0; i < rowCount; i++) {
+            tableModel.removeRow(i);
+        }
     }
     
     public void createView(){

@@ -331,6 +331,8 @@ public class MercadoView extends javax.swing.JFrame {
         String path = fileChooser.getSelectedFile().getAbsolutePath();
         
         mercadoController.createNFE(cliente, valorTotal, path);
+        
+        cadastroProdutoController.flushTable(carrinhoTable);
     }//GEN-LAST:event_generateNFEActionPerformed
 
     private void removeBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBTNActionPerformed

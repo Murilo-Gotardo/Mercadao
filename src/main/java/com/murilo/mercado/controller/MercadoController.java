@@ -83,17 +83,18 @@ public class MercadoController {
             
             writer.write("-----------------Nota Fiscal Eletronica-----------------" + "\n" + "\n");
             
-            writer.write("Comprador " + cliente.getNome() + " de CPF " + cliente.getCpf() + "\n" + "\n");
+            writer.write("Comprador(a) " + cliente.getNome() + " de CPF " + cliente.getCpf() + "\n" + "\n");
             
             writer.write("-------------------Produtos Comprados-------------------" + "\n" + "\n");
             
             for (ProdutoModel produto : cliente.getProdutos()) {
-                writer.write(produto.getNome() + " || " + produto.getPeso() + "Kg || R$" + produto.getValor() + "\n" + "\n");
+                writer.write(produto.getNome() + " || " + produto.getPeso() + " Kg || R$" + produto.getValor() + "\n" + "\n");
             }
             
             writer.write("Total R$" + valorTotal);
             
             writer.close();
+            cliente.getProdutos().removeAll(cliente.getProdutos());
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar arquivo", "Arquivo com problema", JOptionPane.ERROR_MESSAGE);
         }
