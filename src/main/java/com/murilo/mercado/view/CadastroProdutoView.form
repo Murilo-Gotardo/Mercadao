@@ -107,7 +107,7 @@
                 <Column editable="true" title="Valor" type="java.lang.Double"/>
               </Table>
             </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="DefaultTableModel model = (DefaultTableModel) produtosTable.getModel();&#xa;if (com.murilo.mercado.model.MercadoModel.getProdutos().isEmpty()) {&#xa;    for (com.murilo.mercado.model.ProdutoModel produto : com.murilo.mercado.model.MercadoModel.getProdutos()) {&#xa;        Object[] row = {&#xa;            produto.getId(),&#xa;            produto.getNome(),&#xa;            produto.getDescricao(),&#xa;            produto.getPeso(),&#xa;            produto.getValor()&#xa;        };&#xa;        model.addRow(row);&#xa;    }&#xa;}">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="DefaultTableModel model = (DefaultTableModel) produtosTable.getModel();&#xa;if (!MercadoModel.getProdutos().isEmpty()) {&#xa;    for (ProdutoModel produto : MercadoModel.getProdutos()) {&#xa;        Object[] row = {&#xa;            produto.getId(),&#xa;            produto.getNome(),&#xa;            produto.getDescricao(),&#xa;            produto.getPeso(),&#xa;            produto.getValor()&#xa;        };&#xa;        model.addRow(row);&#xa;    }&#xa;}">
               <TableColumnModel selectionModel="2">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>

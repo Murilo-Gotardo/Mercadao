@@ -6,11 +6,10 @@ package com.murilo.mercado.controller;
 
 import com.murilo.mercado.model.AdministradorModel;
 import com.murilo.mercado.model.ClienteModel;
-import com.murilo.mercado.model.MercadoModel;
 import com.murilo.mercado.model.abstraction.Pessoa;
 import com.murilo.mercado.view.LoginView;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 
 /**
  *
@@ -18,9 +17,9 @@ import javax.swing.JOptionPane;
  */
 public class LoginController {
 
-    MercadoController mercadoController = new MercadoController();
+    private final MercadoController mercadoController = new MercadoController();
 
-    public boolean login(String name, String cpf, boolean isAdmin) {
+    public boolean login(String name, String cpf, boolean isAdmin, JLabel textRequirements) {
         Pessoa pessoa = null;
         if (mercadoController.getAdmin(cpf) == null && mercadoController.getCliente(cpf) == null) {
             if (isAdmin) {
@@ -34,14 +33,18 @@ public class LoginController {
         } else {
             pessoa = !isAdmin ? mercadoController.getAdmin(cpf) : mercadoController.getCliente(cpf);
             if (isAdmin && pessoa instanceof ClienteModel) {
-                JOptionPane.showMessageDialog(null, "Clientes não podem acessar a área de Admins", "Cliente Negado", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(null, "Clientes não podem acessar a área de Admins", "Cliente Negado", JOptionPane.ERROR_MESSAGE);
+                textRequirements.setText("*Clientes não podem acessar a área de Admins");
+                textRequirements.setVisible(true);
+                return false;
             } else if (!isAdmin && pessoa instanceof AdministradorModel) {
-                JOptionPane.showMessageDialog(null, "Admins não podem fazer compras", "Admin Negado", JOptionPane.ERROR_MESSAGE);
+                //JOptionPane.showMessageDialog(null, "Admins não podem fazer compras", "Admin Negado", JOptionPane.ERROR_MESSAGE);
+                textRequirements.setText("*Admins não podem fazer compras");
+                textRequirements.setVisible(true);
+                return false;
             } else {
-                JOptionPane.showMessageDialog(null, "Usuário já existe", "Login Negado", JOptionPane.ERROR_MESSAGE);
+                return true;
             }
-            
-            return false;
         }
     }
 

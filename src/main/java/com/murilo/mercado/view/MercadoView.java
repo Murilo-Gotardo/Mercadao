@@ -5,26 +5,19 @@
 package com.murilo.mercado.view;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.murilo.mercado.controller.CadastroProdutoController;
 import com.murilo.mercado.controller.LoginController;
 import com.murilo.mercado.controller.MercadoController;
 import com.murilo.mercado.model.ClienteModel;
-import com.murilo.mercado.model.MercadoModel;
 import com.murilo.mercado.model.ProdutoModel;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import util.TimeManager;
+import com.murilo.mercado.model.MercadoModel;
 
 /**
  *
@@ -34,8 +27,9 @@ public class MercadoView extends javax.swing.JFrame {
 
     private ClienteModel cliente;
     private double valorTotal;
-    private MercadoController mercadoController = new MercadoController();
-    private LoginController loginController = new LoginController();
+    private final CadastroProdutoController cadastroProdutoController = new CadastroProdutoController();
+    private final MercadoController mercadoController = new MercadoController();
+    private final LoginController loginController = new LoginController();
 
     public MercadoView() {
     }
@@ -66,10 +60,11 @@ public class MercadoView extends javax.swing.JFrame {
         produtosTable = new javax.swing.JTable();
         adicionaAoCarrinhoBTN = new javax.swing.JButton();
         carrinho = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        generateNFE = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         carrinhoTable = new javax.swing.JTable();
         valorCarrinhoLabel = new javax.swing.JLabel();
+        removeBTN = new javax.swing.JButton();
         greeting = new javax.swing.JLabel();
         logoutBTN = new javax.swing.JButton();
 
@@ -128,10 +123,9 @@ public class MercadoView extends javax.swing.JFrame {
         }
         jScrollPane1.setViewportView(produtosTable);
         produtosTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        produtosTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         DefaultTableModel model = (DefaultTableModel) produtosTable.getModel();
-        if (!com.murilo.mercado.model.MercadoModel.getProdutos().isEmpty()) {
-            for (com.murilo.mercado.model.ProdutoModel produto : com.murilo.mercado.model.MercadoModel.getProdutos()) {
+        if (!MercadoModel.getProdutos().isEmpty()) {
+            for (ProdutoModel produto : MercadoModel.getProdutos()) {
                 Object[] row = {
                     produto.getId(),
                     produto.getNome(),
@@ -163,34 +157,34 @@ public class MercadoView extends javax.swing.JFrame {
         jTabbedPane1.addTab("Produtos", produtos);
 
         java.awt.GridBagLayout carrinhoLayout = new java.awt.GridBagLayout();
-        carrinhoLayout.columnWidths = new int[] {0, 5, 0};
+        carrinhoLayout.columnWidths = new int[] {0, 5, 0, 5, 0};
         carrinhoLayout.rowHeights = new int[] {0, 5, 0};
         carrinho.setLayout(carrinhoLayout);
 
-        jButton1.setText("Gerar NF-e");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        generateNFE.setText("Gerar NF-e");
+        generateNFE.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                generateNFEActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        carrinho.add(jButton1, gridBagConstraints);
+        carrinho.add(generateNFE, gridBagConstraints);
 
         carrinhoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome", "Valor"
+                "Id", "Nome", "Valor"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -231,14 +225,25 @@ public class MercadoView extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.gridwidth = 5;
         carrinho.add(jScrollPane3, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
         carrinho.add(valorCarrinhoLabel, gridBagConstraints);
+
+        removeBTN.setText("Remover");
+        removeBTN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeBTNActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        carrinho.add(removeBTN, gridBagConstraints);
 
         jTabbedPane1.addTab("Carrinho", carrinho);
 
@@ -249,7 +254,7 @@ public class MercadoView extends javax.swing.JFrame {
         gridBagConstraints.gridheight = 9;
         getContentPane().add(jTabbedPane1, gridBagConstraints);
 
-        greeting.setText("Olá " + getCliente().getNome());
+        greeting.setText(TimeManager.getGretting() + ", " + getCliente().getNome());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -290,10 +295,11 @@ public class MercadoView extends javax.swing.JFrame {
             rowData.add(value);
         }
         
-        Object[] carrinhoArray = new Object[2];
+        Object[] carrinhoArray = new Object[3];
         
-        carrinhoArray[0] = rowData.get(1);
-        carrinhoArray[1] = rowData.get(4);
+        carrinhoArray[0] = rowData.get(0);
+        carrinhoArray[1] = rowData.get(1);
+        carrinhoArray[2] = rowData.get(4);
 
         // Adicionando a lista como uma nova linha na tabela de destino
         DefaultTableModel carrinhoTableModel = (DefaultTableModel) carrinhoTable.getModel();
@@ -315,7 +321,7 @@ public class MercadoView extends javax.swing.JFrame {
         loginController.createView();
     }//GEN-LAST:event_logoutBTNActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void generateNFEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateNFEActionPerformed
         // TODO add your handling code here:
         JFileChooser fileChooser = new JFileChooser();
 
@@ -325,7 +331,21 @@ public class MercadoView extends javax.swing.JFrame {
         String path = fileChooser.getSelectedFile().getAbsolutePath();
         
         mercadoController.createNFE(cliente, valorTotal, path);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_generateNFEActionPerformed
+
+    private void removeBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBTNActionPerformed
+        // TODO add your handling code here:
+        int removedProdutoId = cadastroProdutoController.removeProdutoFromTable(carrinhoTable);
+        double valueRemoved = cliente.getProdutos().stream()
+                .filter(p -> p.getId() == removedProdutoId)
+                .findFirst()
+                .orElseThrow()
+                .getValor();
+        cliente.getProdutos().removeIf(p -> p.getId() == removedProdutoId);
+        
+        valorTotal -= valueRemoved;
+        valorCarrinhoLabel.setText("Valor Total R$" + valorTotal);
+    }//GEN-LAST:event_removeBTNActionPerformed
 
     /**
      * @param args the command line arguments
@@ -343,7 +363,7 @@ public class MercadoView extends javax.swing.JFrame {
         return cliente;
     }
 
-    public void setCliente(ClienteModel cliente) {
+    private void setCliente(ClienteModel cliente) {
         this.cliente = cliente;
     }
 
@@ -351,14 +371,15 @@ public class MercadoView extends javax.swing.JFrame {
     private javax.swing.JButton adicionaAoCarrinhoBTN;
     private javax.swing.JPanel carrinho;
     private javax.swing.JTable carrinhoTable;
+    private javax.swing.JButton generateNFE;
     private javax.swing.JLabel greeting;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton logoutBTN;
     private javax.swing.JPanel produtos;
     private javax.swing.JTable produtosTable;
+    private javax.swing.JButton removeBTN;
     private javax.swing.JLabel valorCarrinhoLabel;
     // End of variables declaration//GEN-END:variables
 }

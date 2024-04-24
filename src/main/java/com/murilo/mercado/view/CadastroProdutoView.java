@@ -19,7 +19,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CadastroProdutoView extends javax.swing.JFrame {
 
-    private CadastroProdutoController cadastroProdutoController = new CadastroProdutoController();
+    private final CadastroProdutoController cadastroProdutoController = new CadastroProdutoController();
+    private final LoginController loginController = new LoginController();
+    private final MercadoController mercadoController = new MercadoController();
     
     /**
      * Creates new form CadastroProdutos
@@ -150,8 +152,8 @@ public class CadastroProdutoView extends javax.swing.JFrame {
         jScrollPane1.setViewportView(produtosTable);
         produtosTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         DefaultTableModel model = (DefaultTableModel) produtosTable.getModel();
-        if (com.murilo.mercado.model.MercadoModel.getProdutos().isEmpty()) {
-            for (com.murilo.mercado.model.ProdutoModel produto : com.murilo.mercado.model.MercadoModel.getProdutos()) {
+        if (!MercadoModel.getProdutos().isEmpty()) {
+            for (ProdutoModel produto : MercadoModel.getProdutos()) {
                 Object[] row = {
                     produto.getId(),
                     produto.getNome(),
@@ -221,23 +223,14 @@ public class CadastroProdutoView extends javax.swing.JFrame {
 
     private void salvarBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarBTNActionPerformed
         // TODO add your handling code here:
-
         ProdutoModel produto = new ProdutoModel(name.getText(), description.getText(), ((Number) weigth.getValue()).doubleValue(), ((Number) value.getValue()).doubleValue());
 
-        DefaultTableModel tableModel = (DefaultTableModel) produtosTable.getModel();
-
-        Object[] prodData = {produto.getId(), produto.getNome(), produto.getDescricao(), produto.getPeso(), produto.getValor()};
-
-        tableModel.addRow(prodData);
-        
-        MercadoModel.getProdutos().add(produto);
+        cadastroProdutoController.addProtuctsToTable(produtosTable, produto);
 
         name.setText("");
         description.setText("");
         weigth.setText("");
         value.setText("");
-        
-        
     }//GEN-LAST:event_salvarBTNActionPerformed
 
     private void produtosTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_produtosTableMouseClicked
@@ -247,23 +240,14 @@ public class CadastroProdutoView extends javax.swing.JFrame {
 
     private void removerBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerBTNActionPerformed
         // TODO add your handling code here:
-
-        DefaultTableModel tableModel = (DefaultTableModel) produtosTable.getModel();
-
-        int selectedRow = produtosTable.getSelectedRow();
-        if (selectedRow != -1) {
-            Object selectedId = produtosTable.getValueAt(selectedRow, 0);
-            MercadoModel.getProdutos().removeIf(produto -> selectedId.equals(produto.getId()));
-        }
-
-        tableModel.removeRow(produtosTable.getSelectedRow());
-        tableModel.fireTableCellUpdated(produtosTable.getSelectedRow(), produtosTable.getSelectedColumn());
+        int removedProdutoId = cadastroProdutoController.removeProdutoFromTable(produtosTable);
+        mercadoController.removeProdutoById(removedProdutoId);
     }//GEN-LAST:event_removerBTNActionPerformed
 
     private void logoutBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBTNActionPerformed
         // TODO add your handling code here
-        this.setVisible(false);
-        new LoginView().setVisible(true);
+        loginController.logout(this);
+        loginController.createView();
     }//GEN-LAST:event_logoutBTNActionPerformed
 
     /**

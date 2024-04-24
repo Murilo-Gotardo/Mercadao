@@ -20,9 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class MercadoController {
     
-    
     public boolean addCliente(String name, String cpf) {
-        
         ClienteModel cliente = getCliente(cpf);
         
         if (cliente == null) {
@@ -63,6 +61,10 @@ public class MercadoController {
             .orElse(null);
     }
     
+    public void addProduto(ProdutoModel produto) {
+        MercadoModel.getProdutos().add(produto);
+    }
+    
     public ProdutoModel getProdutoById(int id) {
         return MercadoModel.getProdutos()
                 .stream()
@@ -71,6 +73,10 @@ public class MercadoController {
                 .orElseThrow();
     }
     
+    public <T> void removeProdutoById(T id){
+        MercadoModel.getProdutos().removeIf(produto -> id.equals(produto.getId()));
+    }
+   
     public void createNFE(ClienteModel cliente, double valorTotal, String path){
         try {
             FileWriter writer = new FileWriter(new File(path + "/NF-e.txt"));

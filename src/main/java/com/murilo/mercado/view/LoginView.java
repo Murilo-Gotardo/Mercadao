@@ -4,16 +4,11 @@
  */
 package com.murilo.mercado.view;
 
-import com.murilo.mercado.view.MercadoView;
-import com.murilo.mercado.view.CadastroProdutoView;
 import com.formdev.flatlaf.FlatDarkLaf;
 import com.murilo.mercado.model.ClienteModel;
-import com.murilo.mercado.model.MercadoModel;
 import com.murilo.mercado.controller.CadastroProdutoController;
 import com.murilo.mercado.controller.LoginController;
 import com.murilo.mercado.controller.MercadoController;
-import com.murilo.mercado.model.AdministradorModel;
-import com.murilo.mercado.model.abstraction.Pessoa;
 
 /**
  *
@@ -21,9 +16,9 @@ import com.murilo.mercado.model.abstraction.Pessoa;
  */
 public class LoginView extends javax.swing.JFrame {
 
-    private CadastroProdutoController cadastroProdutoController = new CadastroProdutoController();
-    private MercadoController mercadoController = new MercadoController();
-    private LoginController loginController = new LoginController();
+    private final CadastroProdutoController cadastroProdutoController = new CadastroProdutoController();
+    private final MercadoController mercadoController = new MercadoController();
+    private final LoginController loginController = new LoginController();
 
     /**
      * Creates new form NewJFrame
@@ -44,11 +39,11 @@ public class LoginView extends javax.swing.JFrame {
 
         isAdmin = new javax.swing.JCheckBox();
         nomeCliente = new javax.swing.JTextField();
-        cpfCliente = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         loginBTN = new javax.swing.JButton();
         textRequirements = new javax.swing.JLabel();
+        cpfCliente = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -62,7 +57,10 @@ public class LoginView extends javax.swing.JFrame {
                 formKeyPressed(evt);
             }
         });
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
+        layout.columnWidths = new int[] {0};
+        layout.rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
+        getContentPane().setLayout(layout);
 
         isAdmin.setText("Sou Admin");
         isAdmin.addActionListener(new java.awt.event.ActionListener() {
@@ -73,48 +71,29 @@ public class LoginView extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 14;
-        gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        gridBagConstraints.insets = new java.awt.Insets(25, 0, 0, 0);
         getContentPane().add(isAdmin, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 50;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         getContentPane().add(nomeCliente, gridBagConstraints);
-
-        cpfCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cpfClienteActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 50;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        getContentPane().add(cpfCliente, gridBagConstraints);
 
         jLabel1.setText("Nome");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(5, 7, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
         getContentPane().add(jLabel1, gridBagConstraints);
 
         jLabel2.setText("CPF");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(5, 7, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 0);
         getContentPane().add(jLabel2, gridBagConstraints);
 
         loginBTN.setText("Entrar");
@@ -131,20 +110,29 @@ public class LoginView extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 18;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.gridheight = 5;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(loginBTN, gridBagConstraints);
 
         textRequirements.setForeground(new java.awt.Color(204, 51, 0));
-        textRequirements.setText("*Preencha todos os campos");
+        textRequirements.setFocusable(false);
         textRequirements.setVisible(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(13, 0, 0, 0);
         getContentPane().add(textRequirements, gridBagConstraints);
+
+        try {
+            cpfCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 50;
+        getContentPane().add(cpfCliente, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -153,14 +141,10 @@ public class LoginView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_isAdminActionPerformed
 
-    private void cpfClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpfClienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cpfClienteActionPerformed
-
     private void loginBTNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBTNActionPerformed
         // TODO add your handling code here:
         if (!nomeCliente.getText().isEmpty() && !cpfCliente.getText().isEmpty()) {
-            if (loginController.login(nomeCliente.getText(), cpfCliente.getText(), isAdmin.isSelected())) {
+            if (loginController.login(nomeCliente.getText(), cpfCliente.getText(), isAdmin.isSelected(), textRequirements)) {
                 if (isAdmin.isSelected()) {
                     cadastroProdutoController.createView();
                 } else {
@@ -170,6 +154,7 @@ public class LoginView extends javax.swing.JFrame {
                 loginController.logout(this);
             }
         } else {
+            textRequirements.setText("*Preencha todos os campos");
             textRequirements.setVisible(true);
         }
     }//GEN-LAST:event_loginBTNActionPerformed
@@ -195,7 +180,7 @@ public class LoginView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField cpfCliente;
+    private javax.swing.JFormattedTextField cpfCliente;
     private javax.swing.JCheckBox isAdmin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
